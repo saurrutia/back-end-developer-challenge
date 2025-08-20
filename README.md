@@ -61,3 +61,27 @@ Here is a list of possible damage types that can occur in Dungeons & Dragons (D&
 If you have any questions or require clarification, please reach out to your Wizards of the Coast contact, and we will provide prompt assistance.
 
 Good luck with the implementation!
+
+## Full-stack addendum
+If completing this challenge as a full-stack engineer, please provide the following UI experience to complement the API.
+
+Build out components that display the following information from the character:
+- Name
+- Class
+- Level
+- Hit Points: Current/Max
+- Temporary Hit Points
+- Each of the stat values
+  
+**This interface should update automatically when a change is made from the API.**
+
+Provide an interface for dealing damage, healing, and adding temporary hit points:
+- Textbox Select(damage type values) Button(text: Deal Damage)
+- Textbox Button(text: Heal)
+- Textbox Button(text: Set Temporary HP)
+  
+Requirements for the UI:
+- Built in React and Typescript
+- CSS Modules for styling
+- Must work on large and small screens
+- Accessibility: should be navigable by keyboard and include proper labels for screen reading software
