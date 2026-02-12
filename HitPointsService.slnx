@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="HitPointsService.API/HitPointsService.API.csproj" />
+  <Project Path="HitPointsService.Application/HitPointsService.Application.csproj" />
+  <Project Path="HitPointsService.Application.Tests/HitPointsService.Application.Tests.csproj" />
+  <Project Path="HitPointsService.Domain/HitPointsService.Domain.csproj" />
+  <Project Path="HitPointsService.Domain.Tests/HitPointsService.Domain.Tests.csproj" />
+  <Project Path="HitPointsService.Infrastructure/HitPointsService.Infrastructure.csproj" />
+  <Project Path="HitPointsService.Infrastructure.Tests/HitPointsService.Infrastructure.Tests.csproj" />
+</Solution>
