@@ -1,12 +1,21 @@
 import type { Character, DamageType } from '../types/character';
+import { apiConfig } from '../config/api.config';
 
-const API_BASE_URL = 'http://localhost:5259';
+const API_BASE_URL = apiConfig.baseUrl;
 
 export const characterService = {
   async getAllCharacters(): Promise<Character[]> {
     const response = await fetch(`${API_BASE_URL}/characters`);
     if (!response.ok) {
       throw new Error('Failed to fetch characters');
+    }
+    return response.json();
+  },
+
+  async getCharacterById(id: string): Promise<Character> {
+    const response = await fetch(`${API_BASE_URL}/characters/${id}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch character');
     }
     return response.json();
   },

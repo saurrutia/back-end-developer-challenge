@@ -4,6 +4,8 @@ using HitPointsService.Application.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using HitPointsService.API.Endpoints;
+using HitPointsService.API.Hubs;
+using HitPointsService.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,7 @@ builder.Services.AddDbContext<DnDDbContext>(options =>
 
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
+builder.Services.AddScoped<ICharacterNotificationService, SignalRCharacterNotificationService>();
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -25,9 +28,12 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:5173")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
+
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -45,5 +51,6 @@ var dbContext = scope.ServiceProvider.GetRequiredService<DnDDbContext>();
 DataSeeder.Seed(dbContext);
 
 app.MapGroup("/characters").MapCharacterEndpoints();
+app.MapHub<CharacterHub>("/hubs/character");
 app.Run();
 

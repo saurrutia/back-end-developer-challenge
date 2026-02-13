@@ -8,6 +8,7 @@ public static class CharacterHandlers
     public static RouteGroupBuilder MapCharacterEndpoints(this RouteGroupBuilder group)
     {
         group.MapGet("/", GetAllCharactersAsync);
+        group.MapGet("/{id}", GetCharacterByIdentifierAsync);
         group.MapPost("/damage", DealDamageAsync);
         group.MapPost("/heal", HealAsync);
         group.MapPost("/temporary-hit-points", AddTemporaryHitPointsAsync);
@@ -18,6 +19,12 @@ public static class CharacterHandlers
     {
         var characters = await characterService.GetAllCharactersAsync();
         return Results.Ok(characters);
+    }
+
+    private static async Task<IResult> GetCharacterByIdentifierAsync(ICharacterService characterService, string id)
+    {
+        var character = await characterService.GetCharacterByIdentifierAsync(id);
+        return character != null ? Results.Ok(character) : Results.NotFound();
     }
 
     private static async Task<IResult> DealDamageAsync(ICharacterService characterService, DealDamageRequest request)

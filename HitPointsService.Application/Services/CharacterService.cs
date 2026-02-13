@@ -6,14 +6,12 @@ using HitPointsService.Domain.Interfaces;
 
 namespace HitPointsService.Application.Services;
 
-public class CharacterService : ICharacterService
+public class CharacterService(
+    ICharacterRepository characterRepository,
+    ICharacterNotificationService notificationService) : ICharacterService
 {
-    private readonly ICharacterRepository _characterRepository;
-
-    public CharacterService(ICharacterRepository characterRepository)
-    {
-        _characterRepository = characterRepository;
-    }
+    private readonly ICharacterRepository _characterRepository = characterRepository;
+    private readonly ICharacterNotificationService _notificationService = notificationService;
 
     public async Task<IEnumerable<CharacterDto>> GetAllCharactersAsync()
     {
@@ -30,6 +28,9 @@ public class CharacterService : ICharacterService
         }
         character.ApplyDamage(damageType, damage);
         await _characterRepository.UpdateAsync(character);
+        
+        await _notificationService.NotifyCharacterUpdatedAsync(characterId);
+        
         return true;
     }
 
@@ -42,6 +43,9 @@ public class CharacterService : ICharacterService
         }
         character.Heal(healAmount);
         await _characterRepository.UpdateAsync(character);
+        
+        await _notificationService.NotifyCharacterUpdatedAsync(characterId);
+        
         return true;
     }
 
@@ -54,6 +58,15 @@ public class CharacterService : ICharacterService
         }
         character.AddTemporaryHitPoints(amount);
         await _characterRepository.UpdateAsync(character);
+        
+        await _notificationService.NotifyCharacterUpdatedAsync(characterId);
+        
         return true;
+    }
+
+    public async Task<CharacterDto?> GetCharacterByIdentifierAsync(string id)
+    {
+        var character = await _characterRepository.GetByIdentifierAsync(id);
+        return character?.ToDto();
     }
 }

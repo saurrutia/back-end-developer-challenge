@@ -9,4 +9,5 @@ public interface ICharacterService
     Task<bool> DealDamageAsync(string characterId, DamageType damageType, int damage);
     Task<bool> HealAsync(string characterId, int amount);
     Task<bool> AddTemporaryHitPointsAsync(string characterId, int amount);
+    Task<CharacterDto?> GetCharacterByIdentifierAsync(string id);
 }

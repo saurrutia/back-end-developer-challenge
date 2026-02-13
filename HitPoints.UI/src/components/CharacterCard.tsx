@@ -2,6 +2,7 @@ import type { Character } from '../types/character';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 interface CharacterCardProps {
   character: Character;
@@ -42,12 +43,12 @@ export const CharacterCard = ({ character }: CharacterCardProps) => {
         <div className="space-y-3">
           <h3 className="text-sm font-semibold">Ability Scores</h3>
           <div className="grid grid-cols-3 gap-3">
-            <StatBox label="STR" value={character.stats.strength} />
-            <StatBox label="DEX" value={character.stats.dexterity} />
-            <StatBox label="CON" value={character.stats.constitution} />
-            <StatBox label="INT" value={character.stats.intelligence} />
-            <StatBox label="WIS" value={character.stats.wisdom} />
-            <StatBox label="CHA" value={character.stats.charisma} />
+            <StatBox label="STR" value={character.stats.strength} additionalValue={character.itemsAffectingStats.filter(i => i.modifierStat == "strength").reduce((acc, item) => acc + item.modifierValue, 0)} />
+            <StatBox label="DEX" value={character.stats.dexterity} additionalValue={character.itemsAffectingStats.filter(i => i.modifierStat == "dexterity").reduce((acc, item) => acc + item.modifierValue, 0)} />
+            <StatBox label="CON" value={character.stats.constitution} additionalValue={character.itemsAffectingStats.filter(i => i.modifierStat == "constitution").reduce((acc, item) => acc + item.modifierValue, 0)} />
+            <StatBox label="INT" value={character.stats.intelligence} additionalValue={character.itemsAffectingStats.filter(i => i.modifierStat == "intelligence").reduce((acc, item) => acc + item.modifierValue, 0)} />
+            <StatBox label="WIS" value={character.stats.wisdom} additionalValue={character.itemsAffectingStats.filter(i => i.modifierStat == "wisdom").reduce((acc, item) => acc + item.modifierValue, 0)} />
+            <StatBox label="CHA" value={character.stats.charisma} additionalValue={character.itemsAffectingStats.filter(i => i.modifierStat == "charisma").reduce((acc, item) => acc + item.modifierValue, 0)} />
           </div>
         </div>
 
@@ -75,15 +76,30 @@ export const CharacterCard = ({ character }: CharacterCardProps) => {
   );
 };
 
-function StatBox({ label, value }: { label: string; value: number }) {
+function StatBox({ label, value, additionalValue }: { label: string; value: number, additionalValue: number }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-lg border bg-card p-3">
       <div className="text-xs font-medium text-muted-foreground mb-1">
         {label}
       </div>
-      <div className="text-2xl font-bold">
-        {value}
-      </div>
+      { additionalValue > 0 ? (
+        <Tooltip>
+          <TooltipTrigger>
+            <div className="text-2xl font-bold text-green-600">
+              {value + additionalValue}
+            </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Base: {value}</p>
+          {additionalValue > 0 && <p>Additional: {additionalValue}</p>}
+        </TooltipContent>
+      </Tooltip>
+      ) : (
+        <div className="text-2xl font-bold">
+          {value}
+        </div>
+      )}
+      
     </div>
   );
 }
