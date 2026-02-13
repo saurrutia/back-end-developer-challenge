@@ -9,12 +9,13 @@ namespace HitPointsService.Application.Tests.Services;
 public class CharacterServiceTests
 {
     private readonly Mock<ICharacterRepository> _mockCharacterRepository;
+    private readonly Mock<ICharacterNotificationService> _mockNotificationService = new Mock<ICharacterNotificationService>();
     private readonly CharacterService _characterService;
 
     public CharacterServiceTests()
     {
         _mockCharacterRepository = new Mock<ICharacterRepository>();
-        _characterService = new CharacterService(_mockCharacterRepository.Object);
+        _characterService = new CharacterService(_mockCharacterRepository.Object, _mockNotificationService.Object);
     }
 
     [Fact]
