@@ -1,54 +1,69 @@
-import { CharacterCard } from './components/CharacterCard';
-import { ActionsCard } from './components/ActionsCard';
+import { useState, useCallback } from 'react';
+import { Button, Spin } from 'antd';
+import { CharacterCard } from './components/character-card/CharacterCard';
+import { ActionsCard } from './components/actions-card/ActionsCard';
 import { useCharacters } from './hooks/useCharacters';
+import './App.css';
+
+type ActionType = 'damage' | 'heal' | 'tempHp';
 
 function App() {
   const { characters, loading, error, reload } = useCharacters();
+  const [highlightedCharacter, setHighlightedCharacter] = useState<{ id: string; type: ActionType } | null>(null);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-6">D&D Character Manager</h1>
-          <div className="text-center text-muted-foreground">Loading characters...</div>
+  const handleActionPerformed = useCallback((characterId: string, actionType: ActionType) => {
+    setHighlightedCharacter({ id: characterId, type: actionType });
+
+    setTimeout(() => {
+      setHighlightedCharacter(null);
+    }, 1000);
+  }, []);
+
+  const renderContent = () => {
+    if (loading) {
+      return (
+        <div className="loading-container">
+          <Spin size="large" description="Loading characters..." />
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  if (error) {
-    return (
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-6">D&D Character Manager</h1>
-          <div className="max-w-md mx-auto rounded-lg border bg-destructive/10 p-6 text-center">
-            <p className="text-destructive mb-4">{error}</p>
-            <button
-              onClick={reload}
-              className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Retry
-            </button>
-          </div>
+    if (error) {
+      return (
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          <Button type="primary" onClick={reload}>
+            Retry
+          </Button>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-6">D&D Character Manager</h1>
-        <ActionsCard characters={characters} />
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+    return (
+      <>
+        <ActionsCard characters={characters} onActionPerformed={handleActionPerformed} />
+        <div className="characters-grid">
           {characters.length === 0 ? (
-            <p className="col-span-full text-center text-muted-foreground">No characters found</p>
+            <p className="no-characters">No characters found</p>
           ) : (
             characters.map((character) => (
-              <CharacterCard key={character.id} character={character} />
+              <CharacterCard
+                key={character.id}
+                character={character}
+                highlightType={highlightedCharacter?.id === character.id ? highlightedCharacter.type : null}
+              />
             ))
           )}
         </div>
+      </>
+    );
+  };
+
+  return (
+    <div className="app-container">
+      <div className="app-content">
+        <h1 className="app-title">D&D Character Manager</h1>
+        {renderContent()}
       </div>
     </div>
   );

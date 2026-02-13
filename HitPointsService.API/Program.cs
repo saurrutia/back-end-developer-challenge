@@ -6,6 +6,9 @@ using System.Text.Json.Serialization;
 using HitPointsService.API.Endpoints;
 using HitPointsService.API.Hubs;
 using HitPointsService.API.Services;
+using FluentValidation;
+using HitPointsService.API.Middleware;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,10 @@ builder.Services.AddDbContext<DnDDbContext>(options =>
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 builder.Services.AddScoped<ICharacterNotificationService, SignalRCharacterNotificationService>();
+
+// Register FluentValidation validators
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -37,11 +44,14 @@ builder.Services.AddSignalR();
 
 var app = builder.Build();
 
+// Add exception middleware FIRST
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwaggerUI(opt => opt.SwaggerEndpoint("/openapi/v1.json", "v1"));
+    app.MapScalarApiReference();
 }
 
 app.UseCors();

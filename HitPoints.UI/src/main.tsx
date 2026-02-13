@@ -1,13 +1,21 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import { TooltipProvider } from '@/components/ui/tooltip';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ConfigProvider, theme } from 'antd';
+import './index.css';
+import App from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <TooltipProvider>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.darkAlgorithm,
+        token: {
+          colorPrimary: '#ff6b35',
+          borderRadius: 8,
+        },
+      }}
+    >
       <App />
-    </TooltipProvider>
+    </ConfigProvider>
   </StrictMode>,
-)
+);

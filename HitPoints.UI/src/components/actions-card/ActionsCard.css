@@ -1,0 +1,44 @@
+.actions-card {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 32px;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 768px) {
+  .actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .actions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.action-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.heal-button {
+  background-color: #52c41a !important;
+}
+
+.heal-button:hover {
+  background-color: #73d13d !important;
+}
+
+.temp-hp-button {
+  background-color: #0ea5e9 !important;
+}
+
+.temp-hp-button:hover {
+  background-color: #38bdf8 !important;
+}
