@@ -1,4 +1,4 @@
-import type { Character, DamageType } from '../../types/character';
+import type { Character } from '../../types/character';
 import { Card, Progress, Tag, Typography, Tooltip } from 'antd';
 import styles from './CharacterCard.module.css';
 
@@ -66,10 +66,12 @@ export const CharacterCard = ({ character, highlightType }: CharacterCardProps) 
           showInfo={false}
           aria-label={`Hit points: ${character.currentHitPoints} out of ${character.hitPoints}`}
         />
-        <div className={styles.characterCardTempHp}>
+        {character.temporaryHitPoints > 0 && (
+          <div className={styles.characterCardTempHp}>
             <span>Temporary HP:</span>
             <Tag color="blue" aria-label={`${character.temporaryHitPoints} temporary hit points`}>{character.temporaryHitPoints}</Tag>
           </div>
+        )}
       </div>
 
       {/* Stats Section */}

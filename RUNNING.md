@@ -17,13 +17,13 @@ This guide explains how to run both the backend API and frontend UI.
 dotnet run --project HitPointsService.API
 ```
 
-The API will be available at `http://localhost:5000`
+The API will be available at `http://localhost:5259`
 
 ### Verify API is Running
 
 Open your browser and navigate to:
-- Swagger UI: `http://localhost:5000/swagger`
-- OpenAPI spec: `http://localhost:5000/openapi/v1.json`
+- API Documentation (Scalar): `http://localhost:5259/scalar/v1`
+- OpenAPI spec: `http://localhost:5259/openapi/v1.json`
 
 ### Available Endpoints
 
@@ -51,6 +51,11 @@ npm run dev
 
 The UI will be available at `http://localhost:5173`
 
+**Features:**
+- Real-time updates via SignalR (auto-refresh when character data changes)
+- Full keyboard navigation and ARIA labels for screen readers
+- Responsive design (mobile, tablet, desktop)
+
 ### Build for Production
 
 ```bash
@@ -65,15 +70,27 @@ npm run preview
 
 ## Testing
 
-Run all unit tests:
+### Backend Tests
+
+Run all 51 unit tests:
 ```bash
 dotnet test
 ```
 
-This will run 51 unit tests across:
-- Domain layer (20 tests)
-- Application layer (12 tests)
-- Infrastructure layer (19 tests)
+Test coverage:
+- Domain layer (22 tests) - damage calculations, resistance/immunity logic, temp HP mechanics
+- Application layer (12 tests) - service operations, character management
+- Infrastructure layer (17 tests) - data seeding, repository operations
+
+### Frontend Tests
+
+Run UI tests:
+```bash
+cd HitPoints.UI
+npm test
+```
+
+Includes component tests with accessibility verification (ARIA labels, keyboard navigation).
 
 ## Project Structure
 
@@ -94,19 +111,20 @@ This will run 51 unit tests across:
 ### CORS Issues
 
 If you see CORS errors in the browser console, ensure:
-1. The API is running on `http://localhost:5000`
+1. The API is running on `http://localhost:5259`
 2. The UI is running on `http://localhost:5173`
 3. The CORS policy in `Program.cs` allows requests from the UI origin
 
 ### Connection Refused
 
 If the UI cannot connect to the API:
-1. Verify the API is running: `http://localhost:5000/characters`
-2. Check the API URL in `src/services/characterService.ts`
+1. Verify the API is running: `http://localhost:5259/characters`
+2. Check the API URL in `HitPoints.UI/src/config/api.config.ts`
 3. Ensure no firewall is blocking the ports
 
 ### Port Already in Use
 
-If port 5000 or 5173 is already in use:
-- For API: Change the port in `launchSettings.json`
+If port 5259 or 5173 is already in use:
+- For API: Change the port in `HitPointsService.API/Properties/launchSettings.json`
 - For UI: Vite will automatically suggest the next available port
+- You can override API URL with environment variable: `VITE_API_BASE_URL=http://localhost:YOUR_PORT`
