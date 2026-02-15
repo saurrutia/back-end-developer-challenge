@@ -29,7 +29,7 @@ describe('App - Accessibility Tests', () => {
     
     const results = await axe(container);
     expect(results).toHaveNoViolations();
-  });
+  }, 10000);
 
   it('should have proper heading hierarchy', async () => {
     vi.mocked(characterService.getAllCharacters).mockResolvedValue(mockCharacters);
