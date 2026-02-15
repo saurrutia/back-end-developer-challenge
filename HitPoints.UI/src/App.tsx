@@ -4,15 +4,16 @@ import { CharacterCard } from './components/character-card/CharacterCard';
 import { ActionsCard } from './components/actions-card/ActionsCard';
 import { useCharacters } from './hooks/useCharacters';
 import styles from './App.module.css';
+import type { Character, DamageType } from './types/character';
 
 type ActionType = 'damage' | 'heal' | 'tempHp';
 
 function App() {
   const { characters, loading, error, reload } = useCharacters();
-  const [highlightedCharacter, setHighlightedCharacter] = useState<{ id: string; type: ActionType } | null>(null);
+  const [highlightedCharacter, setHighlightedCharacter] = useState<{ id: string; type: ActionType, damageType?: DamageType } | null>(null);
 
-  const handleActionPerformed = useCallback((characterId: string, actionType: ActionType) => {
-    setHighlightedCharacter({ id: characterId, type: actionType });
+  const handleActionPerformed = useCallback((characterId: string, actionType: ActionType, damageType?: DamageType) => {
+    setHighlightedCharacter({ id: characterId, type: actionType, damageType });
 
     setTimeout(() => {
       setHighlightedCharacter(null);
@@ -39,6 +40,21 @@ function App() {
       );
     }
 
+    const highlightType = (character: Character) => {
+      if (!highlightedCharacter) return null;
+      if (highlightedCharacter.id !== character.id) return null;
+      if (highlightedCharacter.type === 'damage'){
+        if (character.defenses.some(d => d.defense.toLowerCase() === 'resistance' && d.type.toLowerCase() === highlightedCharacter.damageType?.toLowerCase())) {
+          return 'resistance';
+        }
+        if (character.defenses.some(d => d.defense.toLowerCase() === 'immunity' && d.type.toLowerCase() === highlightedCharacter.damageType?.toLowerCase())) {
+          return 'none';
+        }
+        return 'damage';
+      }
+      return highlightedCharacter.type;
+    }
+      
     return (
       <>
         <ActionsCard characters={characters} onActionPerformed={handleActionPerformed} />
@@ -50,7 +66,7 @@ function App() {
               <CharacterCard
                 key={character.id}
                 character={character}
-                highlightType={highlightedCharacter?.id === character.id ? highlightedCharacter.type : null}
+                highlightType={highlightType(character)}
               />
             ))
           )}

@@ -8,7 +8,7 @@ const { Option } = Select;
 
 interface ActionsCardProps {
     characters: Character[];
-    onActionPerformed?: (characterId: string, actionType: 'damage' | 'heal' | 'tempHp') => void;
+    onActionPerformed?: (characterId: string, actionType: 'damage' | 'heal' | 'tempHp', damageType?: DamageType) => void;
 }
 
 export const ActionsCard = ({ characters, onActionPerformed }: ActionsCardProps) => {
@@ -31,7 +31,7 @@ export const ActionsCard = ({ characters, onActionPerformed }: ActionsCardProps)
         setLoading('damage');
         try {
             await characterService.dealDamage(selectedCharacterId, damageType, Number(damageAmount));
-            onActionPerformed?.(selectedCharacterId, 'damage');
+            onActionPerformed?.(selectedCharacterId, 'damage', damageType);
             setDamageAmount('');
         } catch (error) {
             console.error('Failed to deal damage:', error);

@@ -9,6 +9,7 @@ public enum DamageType
     Cold,
     Lightning,
     Acid,
+    Thunder,
     Poison,
     Psychic,
     Necrotic,

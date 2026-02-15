@@ -14,7 +14,7 @@ export interface Item {
 }
 
 export interface Defense {
-  type: string;
+  type: DamageType;
   defense: string;
 }
 
@@ -39,6 +39,7 @@ export const DamageType = {
   Cold: 'Cold',
   Lightning: 'Lightning',
   Acid: 'Acid',
+  Thunder: 'Thunder',
   Poison: 'Poison',
   Psychic: 'Psychic',
   Necrotic: 'Necrotic',

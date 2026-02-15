@@ -1,4 +1,4 @@
-import type { Character } from '../../types/character';
+import type { Character, DamageType } from '../../types/character';
 import { Card, Progress, Tag, Typography, Tooltip } from 'antd';
 import styles from './CharacterCard.module.css';
 
@@ -6,7 +6,7 @@ const { Title } = Typography;
 
 interface CharacterCardProps {
   character: Character;
-  highlightType?: 'damage' | 'heal' | 'tempHp' | null;
+  highlightType?: 'damage' | 'heal' | 'tempHp' | 'resistance' | 'none' | null;
 }
 
 export const CharacterCard = ({ character, highlightType }: CharacterCardProps) => {
@@ -21,8 +21,10 @@ export const CharacterCard = ({ character, highlightType }: CharacterCardProps) 
         return styles.characterCardHighlightHeal;
       case 'tempHp':
         return styles.characterCardHighlightTempHp;
-      default:
-        return '';
+      case 'resistance':
+        return styles.characterCardHighlightResistance;
+      case 'none':
+        return styles.characterCardHighlightNone;
     }
   };
 
@@ -64,12 +66,10 @@ export const CharacterCard = ({ character, highlightType }: CharacterCardProps) 
           showInfo={false}
           aria-label={`Hit points: ${character.currentHitPoints} out of ${character.hitPoints}`}
         />
-        {character.temporaryHitPoints > 0 && (
-          <div className={styles.characterCardTempHp}>
+        <div className={styles.characterCardTempHp}>
             <span>Temporary HP:</span>
             <Tag color="blue" aria-label={`${character.temporaryHitPoints} temporary hit points`}>{character.temporaryHitPoints}</Tag>
           </div>
-        )}
       </div>
 
       {/* Stats Section */}
@@ -147,7 +147,7 @@ function StatBox({ characterId, label, stat, value, additionalValue }: { charact
   return (
     <div className={styles.characterCardStatBox} role="listitem">
       <div className={styles.characterCardStatLabel} id={`${characterId}-${label}-label`}>{label}</div>
-      <Tooltip title={`${stat}: ${value} ${additionalValue > 0 ? `| Additional: ${additionalValue}` : ''}`}>
+      <Tooltip trigger={['hover', 'focus']} title={`${stat}: ${value} ${additionalValue > 0 ? `| Additional: ${additionalValue}` : ''}`}>
           <div 
             className={`${styles.characterCardStatValue} ${additionalValue > 0 ? styles.characterCardStatValueBonus : ''}`}
             aria-labelledby={`${characterId}-${label}-label`}
