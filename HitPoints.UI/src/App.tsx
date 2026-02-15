@@ -11,6 +11,7 @@ type ActionType = 'damage' | 'heal' | 'tempHp';
 function App() {
   const { characters, loading, error, reload } = useCharacters();
   const [highlightedCharacter, setHighlightedCharacter] = useState<{ id: string; type: ActionType, damageType?: DamageType } | null>(null);
+  const [selectedCharacterId, setSelectedCharacterId] = useState<string>('');
 
   const handleActionPerformed = useCallback((characterId: string, actionType: ActionType, damageType?: DamageType) => {
     setHighlightedCharacter({ id: characterId, type: actionType, damageType });
@@ -54,15 +55,24 @@ function App() {
       }
       return highlightedCharacter.type;
     }
+
+
+    const filteredCharacters = selectedCharacterId 
+      ? characters.filter(c => c.id === selectedCharacterId)
+      : characters;
       
     return (
       <>
-        <ActionsCard characters={characters} onActionPerformed={handleActionPerformed} />
+        <ActionsCard 
+          characters={characters} 
+          onActionPerformed={handleActionPerformed} 
+          onCharacterSelect={setSelectedCharacterId}
+        />
         <div className={styles.charactersGrid} role="list" aria-label="Character cards">
-          {characters.length === 0 ? (
+          {filteredCharacters.length === 0 ? (
             <p className={styles.noCharacters} role="status">No characters found</p>
           ) : (
-            characters.map((character) => (
+            filteredCharacters.map((character) => (
               <CharacterCard
                 key={character.id}
                 character={character}

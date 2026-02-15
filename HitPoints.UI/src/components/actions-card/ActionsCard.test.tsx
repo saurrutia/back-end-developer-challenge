@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe, toHaveNoViolations } from 'jest-axe';
@@ -9,7 +9,18 @@ expect.extend(toHaveNoViolations);
 
 const mockOnActionPerformed = vi.fn();
 
+// Mock the useMediaQuery hook
+vi.mock('@/hooks/useMediaQuery', () => ({
+  useMediaQuery: vi.fn(),
+}));
+
+import { useMediaQuery } from '@/hooks/useMediaQuery';
+
 describe('ActionsCard - Accessibility Tests', () => {
+  beforeEach(() => {
+    // Use desktop view for accessibility tests to ensure all elements are rendered
+    vi.mocked(useMediaQuery).mockReturnValue(true);
+  });
   it('should not have accessibility violations', async () => {
     const { container } = render(
       <ActionsCard characters={mockCharacters} onActionPerformed={mockOnActionPerformed} />
@@ -54,6 +65,11 @@ describe('ActionsCard - Accessibility Tests', () => {
 });
 
 describe('ActionsCard - Keyboard Navigation Tests', () => {
+  beforeEach(() => {
+    // Use desktop view for keyboard navigation tests
+    vi.mocked(useMediaQuery).mockReturnValue(true);
+  });
+
   it('should be keyboard navigable through all form elements', async () => {
     const user = userEvent.setup();
     render(<ActionsCard characters={mockCharacters} onActionPerformed={mockOnActionPerformed} />);
@@ -120,6 +136,10 @@ describe('ActionsCard - Keyboard Navigation Tests', () => {
 });
 
 describe('ActionsCard - Functional Tests', () => {
+  beforeEach(() => {
+    // Use desktop view for functional tests to ensure all elements are accessible
+    vi.mocked(useMediaQuery).mockReturnValue(true);
+  });
   it('should render character select with all characters', () => {
     render(<ActionsCard characters={mockCharacters} onActionPerformed={mockOnActionPerformed} />);
 
