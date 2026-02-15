@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, Select, Input, Button, Form, Space } from 'antd';
 import { DamageType, type Character } from '@/types/character';
 import { characterService } from '@/services/characterService';
-import './ActionsCard.css';
+import styles from './ActionsCard.module.css';
 
 const { Option } = Select;
 
@@ -71,13 +71,15 @@ export const ActionsCard = ({ characters, onActionPerformed }: ActionsCardProps)
     };
 
     return (
-        <Card className="actions-card">
+        <Card className={styles.actionsCard} role="region" aria-label="Character actions">
             <Form layout="vertical">
-                <Form.Item label="Select Character">
+                <Form.Item label="Select Character" htmlFor="character-select">
                     <Select 
+                        id="character-select"
                         placeholder="Select character"
                         value={selectedCharacterId || undefined}
                         onChange={setSelectedCharacterId}
+                        aria-label="Select character to perform actions on"
                     >
                         {characters.map((character: Character) => (
                             <Option key={character.id} value={character.id}>
@@ -87,84 +89,95 @@ export const ActionsCard = ({ characters, onActionPerformed }: ActionsCardProps)
                     </Select>
                 </Form.Item>
 
-                <div className="actions-grid">
+                <div className={styles.actionsGrid}>
                     {/* Deal Damage */}
-                    <div className="action-section">
+                    <div className={styles.actionSection}>
                         <Form.Item label="Deal Damage">
                             <Space.Compact style={{ width: '100%' }}>
                                 <Select 
+                                    id="damage-type-select"
                                     placeholder="Type"
                                     value={damageType}
                                     onChange={setDamageType}
                                     style={{ width: '50%' }}
+                                    aria-label="Select damage type"
                                 >
                                     {Object.values(DamageType).map((type) => (
-                                        <Option key={type} value={type}>{type}</Option>
+                                        <Option role="option" key={type} value={type}>{type}</Option>
                                     ))}
                                 </Select>
                                 <Input 
+                                    id="damage-amount"
                                     type="number" 
                                     placeholder="Amount" 
                                     value={damageAmount}
                                     onChange={(e) => handleNumberInput(e.target.value, setDamageAmount)}
                                     min={1}
                                     style={{ width: '50%' }}
+                                    aria-label="Damage amount"
                                 />
                             </Space.Compact>
                         </Form.Item>
                         <Button 
-                            type="primary"
-                            danger
+                            color="danger"
+                            variant='outlined'
                             onClick={handleDealDamage}
                             disabled={!selectedCharacterId || !damageAmount || loading === 'damage'}
                             loading={loading === 'damage'}
                             block
+                            aria-label="Deal damage to selected character"
                         >
                             {loading === 'damage' ? 'Dealing...' : 'Damage'}
                         </Button>
                     </div>
 
                     {/* Heal */}
-                    <div className="action-section">
-                        <Form.Item label="Heal">
+                    <div className={styles.actionSection}>
+                        <Form.Item label="Heal" htmlFor="heal-amount">
                             <Input 
+                                id="heal-amount"
                                 type="number" 
                                 placeholder="Amount" 
                                 value={healAmount}
                                 onChange={(e) => handleNumberInput(e.target.value, setHealAmount)}
                                 min={1}
+                                aria-label="Heal amount"
                             />
                         </Form.Item>
                         <Button 
-                            type="primary"
-                            className="heal-button"
+                            color="green"
+                            variant='outlined'
                             onClick={handleHeal}
                             disabled={!selectedCharacterId || !healAmount || loading === 'heal'}
                             loading={loading === 'heal'}
                             block
+                            aria-label="Heal selected character"
                         >
                             {loading === 'heal' ? 'Healing...' : 'Heal'}
                         </Button>
                     </div>
 
                     {/* Temporary Hit Points */}
-                    <div className="action-section">
-                        <Form.Item label="Temporary Hit Points">
+                    <div className={styles.actionSection}>
+                        <Form.Item label="Temporary Hit Points" htmlFor="temp-hp-amount">
                             <Input 
+                                id="temp-hp-amount"
                                 type="number" 
                                 placeholder="Amount" 
                                 value={tempHpAmount}
                                 onChange={(e) => handleNumberInput(e.target.value, setTempHpAmount)}
                                 min={1}
+                                aria-label="Temporary hit points amount"
                             />
                         </Form.Item>
                         <Button 
-                            type="primary"
-                            className="temp-hp-button"
+                            color="cyan"
+                            variant='outlined'
                             onClick={handleAddTempHp}
                             disabled={!selectedCharacterId || !tempHpAmount || loading === 'tempHp'}
                             loading={loading === 'tempHp'}
                             block
+                            aria-label="Add temporary hit points to selected character"
                         >
                             {loading === 'tempHp' ? 'Adding...' : 'Add'}
                         </Button>

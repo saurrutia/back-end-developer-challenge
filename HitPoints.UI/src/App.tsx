@@ -3,7 +3,7 @@ import { Button, Spin } from 'antd';
 import { CharacterCard } from './components/character-card/CharacterCard';
 import { ActionsCard } from './components/actions-card/ActionsCard';
 import { useCharacters } from './hooks/useCharacters';
-import './App.css';
+import styles from './App.module.css';
 
 type ActionType = 'damage' | 'heal' | 'tempHp';
 
@@ -22,17 +22,17 @@ function App() {
   const renderContent = () => {
     if (loading) {
       return (
-        <div className="loading-container">
-          <Spin size="large" description="Loading characters..." />
+        <div className={styles.loadingContainer} role="status" aria-live="polite">
+          <Spin size="large" aria-label="Loading characters..." />
         </div>
       );
     }
 
     if (error) {
       return (
-        <div className="error-container">
-          <p className="error-message">{error}</p>
-          <Button type="primary" onClick={reload}>
+        <div className={styles.errorContainer} role="alert" aria-live="assertive">
+          <p className={styles.errorMessage}>{error}</p>
+          <Button type="primary" onClick={reload} aria-label="Retry loading characters">
             Retry
           </Button>
         </div>
@@ -42,9 +42,9 @@ function App() {
     return (
       <>
         <ActionsCard characters={characters} onActionPerformed={handleActionPerformed} />
-        <div className="characters-grid">
+        <div className={styles.charactersGrid} role="list" aria-label="Character cards">
           {characters.length === 0 ? (
-            <p className="no-characters">No characters found</p>
+            <p className={styles.noCharacters} role="status">No characters found</p>
           ) : (
             characters.map((character) => (
               <CharacterCard
@@ -60,9 +60,9 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <div className="app-content">
-        <h1 className="app-title">D&D Character Manager</h1>
+    <div className={styles.appContainer}>
+      <div className={styles.appContent} role="banner">
+        <h2 className={styles.appTitle}>D&D Character Manager</h2>
         {renderContent()}
       </div>
     </div>

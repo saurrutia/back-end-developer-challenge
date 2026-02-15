@@ -8,10 +8,12 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ConfigProvider
       theme={{
+        hashed: false,
         algorithm: theme.darkAlgorithm,
         token: {
           colorPrimary: '#ff6b35',
           borderRadius: 8,
+          colorTextPlaceholder: '#999999',
         },
       }}
     >

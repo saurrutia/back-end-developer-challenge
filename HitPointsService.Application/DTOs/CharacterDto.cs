@@ -11,4 +11,5 @@ public class CharacterDto
     public List<string> Classes { get; set; } = [];
     public StatsDto Stats { get; set; } = new();
     public List<ItemDto> ItemsAffectingStats { get; set; } = [];
+    public List<DefenseDto> Defenses { get; set; } = [];
 }

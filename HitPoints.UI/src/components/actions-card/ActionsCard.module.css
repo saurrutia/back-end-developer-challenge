@@ -1,44 +1,44 @@
-.actions-card {
+.actionsCard {
   width: 100%;
   max-width: 800px;
   margin: 0 auto 32px;
 }
 
-.actions-grid {
+.actionsGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
 }
 
 @media (min-width: 768px) {
-  .actions-grid {
+  .actionsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .actions-grid {
+  .actionsGrid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.action-section {
+.actionSection {
   display: flex;
   flex-direction: column;
 }
 
-.heal-button {
+.healButton {
   background-color: #52c41a !important;
 }
 
-.heal-button:hover {
+.healButton:hover {
   background-color: #73d13d !important;
 }
 
-.temp-hp-button {
+.tempHpButton {
   background-color: #0ea5e9 !important;
 }
 
-.temp-hp-button:hover {
+.tempHpButton:hover {
   background-color: #38bdf8 !important;
 }

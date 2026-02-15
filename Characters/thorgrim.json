@@ -1,0 +1,40 @@
+{
+  "name": "Thorgrim",
+  "level": 7,
+  "hitPoints": 52,
+  "classes": [
+    {
+    "name":"barbarian",
+    "hitDiceValue":12,
+    "classLevel":7
+    }
+  ],
+  "stats":{
+    "strength":18,
+    "dexterity":14,
+    "constitution":16,
+    "intelligence":8,
+    "wisdom":11,
+    "charisma":9
+  },
+  "items":[
+    {
+      "name":"Amulet of Health",
+      "modifier":{
+        "affectedObject":"stats",
+        "affectedValue":"constitution",
+        "value":3
+      }
+    }
+  ],
+  "defenses":[
+    {
+      "type":"lightning",
+      "defense":"resistance"
+    },
+    {
+      "type":"piercing",
+      "defense":"resistance"
+    }
+  ]
+}

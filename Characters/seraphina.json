@@ -1,0 +1,40 @@
+{
+  "name": "Seraphina",
+  "level": 4,
+  "hitPoints": 28,
+  "classes": [
+    {
+    "name":"cleric",
+    "hitDiceValue":8,
+    "classLevel":4
+    }
+  ],
+  "stats":{
+    "strength":10,
+    "dexterity":12,
+    "constitution":14,
+    "intelligence":11,
+    "wisdom":17,
+    "charisma":13
+  },
+  "items":[
+    {
+      "name":"Periapt of Wisdom",
+      "modifier":{
+        "affectedObject":"stats",
+        "affectedValue":"wisdom",
+        "value":2
+      }
+    }
+  ],
+  "defenses":[
+    {
+      "type":"necrotic",
+      "defense":"immunity"
+    },
+    {
+      "type":"radiant",
+      "defense":"resistance"
+    }
+  ]
+}

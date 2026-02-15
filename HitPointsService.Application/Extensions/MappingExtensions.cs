@@ -19,7 +19,8 @@ public static class MappingExtensions
             TemporaryHitPoints = character.TemporaryHitPoints,
             Stats = character.Stats.ToDto(),
             Classes = [.. character.Classes.Select(c => c.Name)],
-            ItemsAffectingStats = [.. character.Items.Select(ToItemsAffectingStatsDto)]
+            ItemsAffectingStats = [.. character.Items.Select(ToItemsAffectingStatsDto)],
+            Defenses = [.. character.Defenses.Select(ToDefenseDto)]
         };
     }
 
@@ -61,6 +62,15 @@ public static class MappingExtensions
         return new ItemDto
         {
             Name = item.Name
+        };
+    }
+
+    public static DefenseDto ToDefenseDto(this CharacterDefense defense)
+    {
+        return new DefenseDto
+        {
+            Type = defense.Type.ToString(),
+            Defense = defense.Defense.ToString()
         };
     }
 }

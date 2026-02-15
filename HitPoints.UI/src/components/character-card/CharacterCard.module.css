@@ -1,52 +1,52 @@
-.character-card {
+.characterCard {
   width: 100%;
   max-width: 400px;
   transition: all 0.3s ease;
 }
 
-.character-card-highlight-damage {
+.characterCardHighlightDamage {
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.5), 0 10px 20px rgba(239, 68, 68, 0.3);
 }
 
-.character-card-highlight-heal {
+.characterCardHighlightHeal {
   box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5), 0 10px 20px rgba(34, 197, 94, 0.3);
 }
 
-.character-card-highlight-temphp {
+.characterCardHighlightTempHp {
   box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.5), 0 10px 20px rgba(14, 165, 233, 0.3);
 }
 
-.character-card-section {
+.characterCardSection {
   margin-top: 24px;
 }
 
-.character-card-section:first-child {
+.characterCardSection:first-child {
   margin-top: 0;
 }
 
-.character-card-section h3 {
+.characterCardSection h3 {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 12px;
 }
 
-.character-card-hp-header {
+.characterCardHpHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 }
 
-.character-card-hp-header h3 {
+.characterCardHpHeader h3 {
   margin-bottom: 0;
 }
 
-.character-card-hp-header span {
+.characterCardHpHeader span {
   font-size: 14px;
   font-weight: 500;
 }
 
-.character-card-temp-hp {
+.characterCardTempHp {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -54,13 +54,13 @@
   font-size: 13px;
 }
 
-.character-card-stats-grid {
+.characterCardStatsGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
-.character-card-stat-box {
+.characterCardStatBox {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,41 +71,67 @@
   background-color: rgba(255, 255, 255, 0.02);
 }
 
-.character-card-stat-label {
+.characterCardStatLabel {
   font-size: 12px;
   font-weight: 500;
   color: #888;
   margin-bottom: 4px;
 }
 
-.character-card-stat-value {
+.characterCardStatValue {
   font-size: 24px;
   font-weight: 700;
 }
 
-.character-card-stat-value-bonus {
+.characterCardStatValueBonus {
   color: #52c41a;
 }
 
-.character-card-items {
+.characterCardItems {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
-.character-card-item {
+.characterCardItem {
   padding: 12px;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.02);
 }
 
-.character-card-item-name {
+.characterCardItemName {
   font-weight: 500;
   margin-bottom: 4px;
 }
 
-.character-card-item-modifier {
+.characterCardItemModifier {
   font-size: 12px;
   color: #888;
+}
+
+.characterCardDefenses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.characterCardDefenseRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.characterCardDefenseLabel {
+  font-size: 13px;
+  font-weight: 500;
+  min-width: 80px;
+  color: #888;
+}
+
+.characterCardDefenseTags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
 }

@@ -1,15 +1,15 @@
-.app-container {
+.appContainer {
   min-height: 100vh;
   background-color: #0a0a0a;
 }
 
-.app-content {
+.appContent {
   max-width: 1400px;
   margin: 0 auto;
   padding: 32px 16px;
 }
 
-.app-title {
+.appTitle {
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
@@ -17,14 +17,14 @@
   color: #ffffff;
 }
 
-.loading-container {
+.loadingContainer {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 400px;
 }
 
-.error-container {
+.errorContainer {
   max-width: 500px;
   margin: 0 auto;
   padding: 24px;
@@ -34,13 +34,13 @@
   background-color: rgba(239, 68, 68, 0.1);
 }
 
-.error-message {
+.errorMessage {
   color: #ef4444;
   margin-bottom: 16px;
   font-size: 16px;
 }
 
-.characters-grid {
+.charactersGrid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
@@ -48,18 +48,18 @@
 }
 
 @media (min-width: 768px) {
-  .characters-grid {
+  .charactersGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .characters-grid {
+  .charactersGrid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-.no-characters {
+.noCharacters {
   grid-column: 1 / -1;
   text-align: center;
   color: #888;
@@ -67,11 +67,11 @@
 }
 
 @media (max-width: 767px) {
-  .app-title {
+  .appTitle {
     font-size: 1.5rem;
   }
 
-  .app-content {
+  .appContent {
     padding: 24px 12px;
   }
 }

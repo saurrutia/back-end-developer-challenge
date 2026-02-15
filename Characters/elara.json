@@ -1,0 +1,40 @@
+{
+  "name": "Elara",
+  "level": 6,
+  "hitPoints": 38,
+  "classes": [
+    {
+    "name":"wizard",
+    "hitDiceValue":6,
+    "classLevel":6
+    }
+  ],
+  "stats":{
+    "strength":8,
+    "dexterity":14,
+    "constitution":13,
+    "intelligence":18,
+    "wisdom":12,
+    "charisma":10
+  },
+  "items":[
+    {
+      "name":"Headband of Intellect",
+      "modifier":{
+        "affectedObject":"stats",
+        "affectedValue":"intelligence",
+        "value":2
+      }
+    }
+  ],
+  "defenses":[
+    {
+      "type":"cold",
+      "defense":"resistance"
+    },
+    {
+      "type":"poison",
+      "defense":"resistance"
+    }
+  ]
+}

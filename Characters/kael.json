@@ -1,0 +1,40 @@
+{
+  "name": "Kael",
+  "level": 5,
+  "hitPoints": 35,
+  "classes": [
+    {
+    "name":"rogue",
+    "hitDiceValue":8,
+    "classLevel":5
+    }
+  ],
+  "stats":{
+    "strength":11,
+    "dexterity":18,
+    "constitution":12,
+    "intelligence":14,
+    "wisdom":13,
+    "charisma":10
+  },
+  "items":[
+    {
+      "name":"Gloves of Dexterity",
+      "modifier":{
+        "affectedObject":"stats",
+        "affectedValue":"dexterity",
+        "value":2
+      }
+    }
+  ],
+  "defenses":[
+    {
+      "type":"acid",
+      "defense":"resistance"
+    },
+    {
+      "type":"bludgeoning",
+      "defense":"resistance"
+    }
+  ]
+}

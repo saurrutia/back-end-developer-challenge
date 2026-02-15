@@ -13,6 +13,11 @@ export interface Item {
   modifierValue: number;
 }
 
+export interface Defense {
+  type: string;
+  defense: string;
+}
+
 export interface Character {
   id: string;
   name: string;
@@ -23,6 +28,7 @@ export interface Character {
   classes: string[];
   stats: Stats;
   itemsAffectingStats: Item[];
+  defenses: Defense[];
 }
 
 export const DamageType = {
