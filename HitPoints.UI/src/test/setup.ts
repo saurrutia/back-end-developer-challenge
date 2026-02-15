@@ -27,7 +27,7 @@ class MockResizeObserver {
 
 if (!('ResizeObserver' in window)) {
   // AntD uses ResizeObserver; jsdom doesn't provide it.
-  (window as typeof window & { ResizeObserver?: typeof MockResizeObserver }).ResizeObserver =
+  (window as any).ResizeObserver =
     MockResizeObserver;
 }
 

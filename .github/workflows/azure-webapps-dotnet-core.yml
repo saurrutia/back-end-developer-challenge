@@ -52,8 +52,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
+      - name: Restore dependencies
+        run: dotnet restore
+
       - name: Build with dotnet
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run .NET tests
+        run: dotnet test --no-build --verbosity normal --configuration Release
 
       - name: dotnet publish
         run: dotnet publish HitPointsService.API/HitPointsService.API.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
